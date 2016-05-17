@@ -17,25 +17,26 @@ angular.module('yc.md.timepicker', [])
                     
                 console.log($scope.ngModel);
                 
-                if($scope.showMeridian) {
-                    $scope.meridians = $scope.meridian || ['AM', 'PM'];
-                        
-                    var hours = $scope.ngModel.getHours();
-                    if(hours > 12) {
-                        $scope.ctrl.hours = hours - 12;
-                        $scope.ctrl.meridian = $scope.meridians[1];
-                    } else if(hours == 0) {
-                        $scope.ctrl.hours = 12;
-                        $scope.ctrl.meridian = $scope.meridians[0];
+                $scope.$watch('ngModel', function () {
+                    if($scope.showMeridian) {
+                        $scope.meridians = $scope.meridian || ['AM', 'PM'];
+                            
+                        var hours = $scope.ngModel.getHours();
+                        if(hours > 12) {
+                            $scope.ctrl.hours = hours - 12;
+                            $scope.ctrl.meridian = $scope.meridians[1];
+                        } else if(hours == 0) {
+                            $scope.ctrl.hours = 12;
+                            $scope.ctrl.meridian = $scope.meridians[0];
+                        } else {
+                            $scope.ctrl.hours = hours;
+                            $scope.ctrl.meridian = $scope.meridians[0];
+                        }
                     } else {
-                        $scope.ctrl.hours = hours;
-                        $scope.ctrl.meridian = $scope.meridians[0];
+                        $scope.ctrl.hours = $scope.ngModel.getHours();
                     }
-                } else {
-                    $scope.ctrl.hours = $scope.ngModel.getHours();
-                }
-                $scope.ctrl.minutes = $scope.ngModel.getMinutes();
-                    
+                    $scope.ctrl.minutes = $scope.ngModel.getMinutes();
+                });    
                 function check(ctrl) {
                     if($scope.showMeridian) {
                         return ctrl.hours >= 1 && ctrl.hours <= 12 && ctrl.minutes >= 0 && ctrl.minutes <= 59;
