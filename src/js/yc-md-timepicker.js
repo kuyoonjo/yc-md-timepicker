@@ -10,7 +10,7 @@ angular.module('yc.md.timepicker', [])
                 showMeridian: '=showMeridian',
                 meridian: '=meridian'
             },
-            controller: function ($scope, $timeout) {
+            controller: function ($scope) {
                 $scope.ctrl = this;
                 if(!$scope.ngModel)
                     $scope.ngModel = new Date();
@@ -48,25 +48,23 @@ angular.module('yc.md.timepicker', [])
                         $scope.ctrl.meridian = $scope.meridians[1];
                     else
                         $scope.ctrl.meridian = $scope.meridians[0]    
-                }
+                };
                     
                 $scope.$watch('ctrl', function (ctrl) {
                     if(check(ctrl))
-                        $timeout(function () {
-                            if($scope.showMeridian) {
-                                var hours = ctrl.hours;
-                                if(hours == 12)
-                                    hours -= 12;
-                                if(ctrl.meridian == $scope.meridians[1])
-                                    hours += 12;
-                                $scope.ngModel.setHours(hours, ctrl.minutes);
-                            } else {
-                                $scope.ngModel.setHours(ctrl.hours, ctrl.minutes);
-                            }
-                        })
-                }, true)
+                        if($scope.showMeridian) {
+                            var hours = ctrl.hours;
+                            if(hours == 12)
+                                hours -= 12;
+                            if(ctrl.meridian == $scope.meridians[1])
+                                hours += 12;
+                            $scope.ngModel.setHours(hours, ctrl.minutes);
+                        } else {
+                            $scope.ngModel.setHours(ctrl.hours, ctrl.minutes);
+                        }
+                }, true);
                 
             },
             template: '<ng-transclude></ng-transclude>'
-        }
-    })
+        };
+    });
