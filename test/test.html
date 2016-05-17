@@ -1,0 +1,16 @@
+<head>
+</head>
+<body ng-app="myApp" ng-controller='ctrl'>
+    <yc-md-timepicker ng-model='time' ctrl='ymt' show-meridian='true'>
+        <input type="number" ng-model="ymt.hours" />
+        <input type="number" ng-model="ymt.minutes" />
+        <button ng-click="ymt.swithMeridian()">{{ ymt.meridian }}</button>
+    </yc-md-timepicker>
+    <div>
+      <h2 class="md-title">Time</h2>
+      <code style="display: block; padding: 8px;">{{time}}</code>
+    </div>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../dist/yc-md-timepicker.js"></script>
+    <script src="./app.js"></script>
+</body>
