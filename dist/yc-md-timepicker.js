@@ -18,6 +18,8 @@ angular.module('yc.md.timepicker', [])
                 console.log($scope.ngModel);
                 
                 $scope.$watch('ngModel', function () {
+                    if(!$scope.ngModel)
+                        return;
                     if($scope.showMeridian) {
                         $scope.meridians = $scope.meridian || ['AM', 'PM'];
                             
@@ -52,6 +54,8 @@ angular.module('yc.md.timepicker', [])
                 };
                     
                 $scope.$watch('ctrl', function (ctrl) {
+                    if(!$scope.ngModel)
+                        return;
                     if(check(ctrl))
                         if($scope.showMeridian) {
                             var hours = ctrl.hours;
