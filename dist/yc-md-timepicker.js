@@ -15,8 +15,6 @@ angular.module('yc.md.timepicker', [])
                 if(!$scope.ngModel)
                     $scope.ngModel = new Date();
                     
-                console.log($scope.ngModel);
-                
                 $scope.$watch('ngModel', function () {
                     if(!$scope.ngModel)
                         return;
