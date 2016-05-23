@@ -14,8 +14,11 @@ angular.module('yc.md.timepicker', [])
                 $scope.ctrl = this;
                 if(!$scope.ngModel)
                     $scope.ngModel = new Date();
-                    
-                $scope.$watch('ngModel', function () {
+                
+                refreshCtrl();    
+                $scope.$watch('ngModel', refreshCtrl);
+                
+                function refreshCtrl() {
                     if(!$scope.ngModel)
                         return;
                     if($scope.showMeridian) {
@@ -36,7 +39,8 @@ angular.module('yc.md.timepicker', [])
                         $scope.ctrl.hours = $scope.ngModel.getHours();
                     }
                     $scope.ctrl.minutes = $scope.ngModel.getMinutes();
-                });    
+                }
+                    
                 function check(ctrl) {
                     if($scope.showMeridian) {
                         return ctrl.hours >= 1 && ctrl.hours <= 12 && ctrl.minutes >= 0 && ctrl.minutes <= 59;
