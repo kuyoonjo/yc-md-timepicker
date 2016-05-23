@@ -14,29 +14,35 @@ angular.module('yc.md.timepicker', [])
                 $scope.ctrl = this;
                 if(!$scope.ngModel)
                     $scope.ngModel = new Date();
-                    
-                $scope.$watch('ngModel', function () {
+
+                $scope.$watch('ngModel', refreshCtrl);
+                
+                function refreshCtrl() {
                     if(!$scope.ngModel)
                         return;
                     if($scope.showMeridian) {
                         $scope.meridians = $scope.meridian || ['AM', 'PM'];
                             
                         var hours = $scope.ngModel.getHours();
-                        if(hours > 12) {
-                            $scope.ctrl.hours = hours - 12;
-                            $scope.ctrl.meridian = $scope.meridians[1];
-                        } else if(hours == 0) {
-                            $scope.ctrl.hours = 12;
-                            $scope.ctrl.meridian = $scope.meridians[0];
+                        var meridian;
+                        if(hours >= 12) {
+                            hours -= 12;
+                            meridian = $scope.meridians[1];
                         } else {
-                            $scope.ctrl.hours = hours;
-                            $scope.ctrl.meridian = $scope.meridians[0];
+                            meridian = $scope.meridians[0];
                         }
+                        if(hours == 0)
+                            hours = 12;
+
+                        $scope.ctrl.hours = hours;
+                        $scope.ctrl.meridian = meridian;
+
                     } else {
                         $scope.ctrl.hours = $scope.ngModel.getHours();
                     }
                     $scope.ctrl.minutes = $scope.ngModel.getMinutes();
-                });    
+                }
+                    
                 function check(ctrl) {
                     if($scope.showMeridian) {
                         return ctrl.hours >= 1 && ctrl.hours <= 12 && ctrl.minutes >= 0 && ctrl.minutes <= 59;

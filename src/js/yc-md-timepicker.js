@@ -14,8 +14,7 @@ angular.module('yc.md.timepicker', [])
                 $scope.ctrl = this;
                 if(!$scope.ngModel)
                     $scope.ngModel = new Date();
-                
-                refreshCtrl();    
+
                 $scope.$watch('ngModel', refreshCtrl);
                 
                 function refreshCtrl() {
@@ -24,17 +23,20 @@ angular.module('yc.md.timepicker', [])
                     if($scope.showMeridian) {
                         $scope.meridians = $scope.meridian || ['AM', 'PM'];
                             
-                        var hours = $scope.ngModel.getHours() + 1;
-                        if(hours > 12) {
-                            $scope.ctrl.hours = hours - 12;
-                            $scope.ctrl.meridian = $scope.meridians[1];
-                        } else if(hours == 0) {
-                            $scope.ctrl.hours = 12;
-                            $scope.ctrl.meridian = $scope.meridians[0];
+                        var hours = $scope.ngModel.getHours();
+                        var meridian;
+                        if(hours >= 12) {
+                            hours -= 12;
+                            meridian = $scope.meridians[1];
                         } else {
-                            $scope.ctrl.hours = hours;
-                            $scope.ctrl.meridian = $scope.meridians[0];
+                            meridian = $scope.meridians[0];
                         }
+                        if(hours == 0)
+                            hours = 12;
+
+                        $scope.ctrl.hours = hours;
+                        $scope.ctrl.meridian = meridian;
+
                     } else {
                         $scope.ctrl.hours = $scope.ngModel.getHours();
                     }
@@ -65,9 +67,9 @@ angular.module('yc.md.timepicker', [])
                                 hours -= 12;
                             if(ctrl.meridian == $scope.meridians[1])
                                 hours += 12;
-                            $scope.ngModel.setHours(hours - 1, ctrl.minutes);
+                            $scope.ngModel.setHours(hours, ctrl.minutes);
                         } else {
-                            $scope.ngModel.setHours(ctrl.hours - 1, ctrl.minutes);
+                            $scope.ngModel.setHours(ctrl.hours, ctrl.minutes);
                         }
                 }, true);
                 
