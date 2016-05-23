@@ -24,7 +24,7 @@ angular.module('yc.md.timepicker', [])
                     if($scope.showMeridian) {
                         $scope.meridians = $scope.meridian || ['AM', 'PM'];
                             
-                        var hours = $scope.ngModel.getHours();
+                        var hours = $scope.ngModel.getHours() + 1;
                         if(hours > 12) {
                             $scope.ctrl.hours = hours - 12;
                             $scope.ctrl.meridian = $scope.meridians[1];
@@ -65,9 +65,9 @@ angular.module('yc.md.timepicker', [])
                                 hours -= 12;
                             if(ctrl.meridian == $scope.meridians[1])
                                 hours += 12;
-                            $scope.ngModel.setHours(hours, ctrl.minutes);
+                            $scope.ngModel.setHours(hours - 1, ctrl.minutes);
                         } else {
-                            $scope.ngModel.setHours(ctrl.hours, ctrl.minutes);
+                            $scope.ngModel.setHours(ctrl.hours - 1, ctrl.minutes);
                         }
                 }, true);
                 
