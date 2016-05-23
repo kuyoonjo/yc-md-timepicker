@@ -1,7 +1,10 @@
 {
+  "version": "1.0.0",
   "name": "yc-md-timepicker",
   "description": "",
-  "main": "Gruntfile.js",
+  "main": [
+    "./dist/yc-md-timepicker.js"
+  ],
   "authors": [
     "Yu Chen <yu.chen@live.ie>"
   ],
